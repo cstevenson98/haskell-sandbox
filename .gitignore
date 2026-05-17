@@ -1,0 +1,5 @@
+/haskell-test
+*.hi
+*.o
+
+/dist-newstyle

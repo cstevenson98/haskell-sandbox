@@ -61,7 +61,8 @@ executable haskell-test
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
-    -- other-modules:
+    other-modules:    RealWorld.Chap1.Interact
+                    , RealWorld.Chap1.Drop
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
