@@ -15,8 +15,14 @@ getSecondLastWord s = fromMaybe "" $ lastButOne $ words s
 
 type Parser s = String -> Maybe (s, String)
 
-munchString :: Parser String
-munchString x =
+andThen :: Parser a -> Parser b -> Parser (a, b)
+andThen p1 p2 input = do
+  (a, rest) <- p1 input
+  (b, rest') <- p2 rest
+  return ((a, b), rest')
+
+wordsParser :: Parser String
+wordsParser x =
   Just
     ( takeWhile (not . isSpace) x,
       dropWhile isSpace (dropWhile (not . isSpace) x)
@@ -36,11 +42,19 @@ tupleParser ('(' : rest) =
     _finally -> Nothing
 tupleParser _ = Nothing
 
-main :: IO ()
-main = do
-  input <- getLine
-  case input of
+manyParser :: Parser a -> String -> [a]
+manyParser p input = case p input of
+  Nothing        -> []
+  Just (x, rest) -> x : manyParser p (dropWhile isSpace rest)
+
+consumeWordsAndPrint :: IO ()
+consumeWordsAndPrint = do
+  line <- getLine
+  case line of
     "" -> return ()
     _ -> do
-      print (tupleParser input)
-      main
+      print (manyParser tupleParser line)
+      consumeWordsAndPrint
+
+main :: IO ()
+main = consumeWordsAndPrint
