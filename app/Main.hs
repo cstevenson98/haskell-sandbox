@@ -1,6 +1,7 @@
 module Main (main) where
 
 import Music (playTones)
+import Notes
 
 main :: IO ()
 main =

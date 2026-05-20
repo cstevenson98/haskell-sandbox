@@ -13,6 +13,8 @@ import Data.Int (Int16)
 import GHC.Real (reduce)
 import System.IO (hClose)
 import System.Process (runInteractiveCommand, waitForProcess)
+import qualified Notes  as N
+
 
 sampleRate :: Double
 sampleRate = 44100
